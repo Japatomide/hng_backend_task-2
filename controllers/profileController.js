@@ -110,9 +110,9 @@ const searchProfiles = async (req, res) => {
     }
 
     // Parse natural language to filters
-    const filters = parseNaturalLanguage(q);
+    const parsedFilters = parseNaturalLanguage(q);
 
-    if (!filters) {
+    if (!parsedFilters) {
       return res.status(422).json({
         status: "error",
         message: "Unable to interpret query",
@@ -126,6 +126,9 @@ const searchProfiles = async (req, res) => {
       skip,
     } = getPaginationParams(page, limit);
     const sort = buildSortObject(sort_by, order);
+
+    // Convert parsed filters to MongoDB query
+    const filters = buildFilterQuery(parsedFilters);
 
     // Execute queries
     const [data, total] = await Promise.all([
