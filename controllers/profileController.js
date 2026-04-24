@@ -41,11 +41,15 @@ const getProfiles = async (req, res) => {
       created_at: profile.created_at.toISOString(),
     }));
 
+    const totalPages = Math.ceil(total / limit);
+
     res.status(200).json({
       status: "success",
       page,
       limit,
       total,
+      total_pages: totalPages,
+      has_more: page * limit < total,
       data: formattedData,
     });
   } catch (error) {
@@ -134,11 +138,15 @@ const searchProfiles = async (req, res) => {
       created_at: profile.created_at.toISOString(),
     }));
 
+    const totalPages = Math.ceil(total / limitNum);
+
     res.status(200).json({
       status: "success",
       page: pageNum,
       limit: limitNum,
       total,
+      total_pages: totalPages,
+      has_more: pageNum * limitNum < total,
       data: formattedData,
     });
   } catch (error) {
