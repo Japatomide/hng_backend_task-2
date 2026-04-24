@@ -6,9 +6,14 @@ const buildFilterQuery = (queryParams) => {
 
   // Exact matches
   if (queryParams.gender) {
-    const gender = queryParams.gender.toLowerCase();
-    if (gender === "male" || gender === "female") {
-      filter.gender = gender;
+    // Handle MongoDB operator (from NLP parser) or string (from query params)
+    if (typeof queryParams.gender === "object") {
+      filter.gender = queryParams.gender;
+    } else {
+      const gender = queryParams.gender.toLowerCase();
+      if (gender === "male" || gender === "female") {
+        filter.gender = gender;
+      }
     }
   }
 
