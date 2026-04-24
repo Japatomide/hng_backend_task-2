@@ -111,26 +111,27 @@ const parseNaturalLanguage = (query) => {
   // === AGE GROUP DETECTION ===
   if (
     containsWord(lowerQuery, "teenager") ||
+    containsWord(lowerQuery, "teenagers") ||
     containsWord(lowerQuery, "teen") ||
     containsWord(lowerQuery, "teens")
   ) {
     filters.age_group = "teenager";
   }
-  if (lowerQuery.includes("adult") || lowerQuery.includes("adults")) {
+  if (containsWord(lowerQuery, "adult") || containsWord(lowerQuery, "adults")) {
     filters.age_group = "adult";
   }
   if (
-    lowerQuery.includes("senior") ||
-    lowerQuery.includes("seniors") ||
-    lowerQuery.includes("elderly")
+    containsWord(lowerQuery, "senior") ||
+    containsWord(lowerQuery, "seniors") ||
+    containsWord(lowerQuery, "elderly")
   ) {
     filters.age_group = "senior";
   }
   if (
-    lowerQuery.includes("child") ||
-    lowerQuery.includes("children") ||
-    lowerQuery.includes("kid") ||
-    lowerQuery.includes("kids")
+    containsWord(lowerQuery, "child") ||
+    containsWord(lowerQuery, "children") ||
+    containsWord(lowerQuery, "kid") ||
+    containsWord(lowerQuery, "kids")
   ) {
     filters.age_group = "child";
   }
