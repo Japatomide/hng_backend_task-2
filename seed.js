@@ -3,6 +3,11 @@ import mongoose from "mongoose";
 import Profile from "./models/Profile.js";
 import fs from "fs";
 import path from "path";
+import { fileURLToPath } from "url";
+
+// Handle __dirname in ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Read seed data from JSON file
 const seedDataPath = path.join(__dirname, "seed_data.json");
@@ -22,7 +27,12 @@ const seedDatabase = async () => {
     }
 
     const rawData = fs.readFileSync(seedDataPath, "utf8");
-    const profiles = JSON.parse(rawData);
+    let profiles = JSON.parse(rawData);
+
+    // Handle both array and { profiles: [...] } structure
+    if (profiles.profiles && Array.isArray(profiles.profiles)) {
+      profiles = profiles.profiles;
+    }
 
     if (!Array.isArray(profiles)) {
       console.error("Seed data must be an array of profile objects");
